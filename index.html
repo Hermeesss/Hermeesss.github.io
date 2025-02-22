@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>V██2.exe</title>
+  <!-- Fonte customizada -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+  <div class="container">
+    <video autoplay muted loop id="video-bg">
+      <source src="../Imgs/video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos em HTML5.
+    </video>
+    
+    <!-- Tela Inicial -->
+    <div id="start-screen" class="screen visible">
+      <h1 class="jese-font" id="start-screen-title">
+        INICIALIZANDO...<br>
+        ERRO V██2.exe<br>
+        TESTE Nº███ INICIADO....
+      </h1>
+      <button id="start-button">Começar</button>
+    </div>
+    
+    <!-- Tela de Jogo -->
+    <div id="game-screen" class="screen">
+      <div class="lives" id="lives"></div>
+      <div class="phase" id="phase">Fase: 0 de 5</div>
+      <div class="timer" id="timer">01:40</div>
+      <div class="emojis" id="emojis">😊 😊 😊 😊 😊</div>
+      
+      <div class="box-container">
+        <div class="code-display-container">
+          <div class="code-display" id="code-display"></div>
+          <button class="delete-button" id="delete-button">⌫</button>
+        </div>
+        <div class="keypad" id="keypad">
+          <button class="key" data-key="1">1</button>
+          <button class="key" data-key="2">2</button>
+          <button class="key" data-key="3">3</button>
+          <button class="key" data-key="4">4</button>
+          <button class="key" data-key="5">5</button>
+          <button class="key" data-key="6">6</button>
+          <button class="key" data-key="7">7</button>
+          <button class="key" data-key="8">8</button>
+          <button class="key" data-key="9">9</button>
+          <button class="key" data-key="0">0</button>
+          <button class="send-button" id="send-button">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tela de Vitória -->
+  <div id="win-screen" class="win-screen">
+    <div class="win-box">
+        <div class="win-header">
+            <span class="win-title">V██2.exe - Error</span>
+            <span class="win-close" id="win-close">✖</span>
+        </div>
+        <div class="win-content">
+            <img src="../Imgs/Smile.png" alt="Smiley">
+            <p class="win-message">Parabéns! Você completou o jogo com sucesso!</p>
+            <button id="win-ok" class="win-button">OK</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- Tela de Derrota -->
+  <div id="def-screen" class="def-screen">
+    <div class="def-box">
+        <div class="def-header">
+            <span class="def-title">V██2.exe - Error</span>
+            <span class="def-close" id="def-close">✖</span>
+        </div>
+        <div class="def-content">
+            <img src="../Imgs/angry.png" alt="Angry">
+            <p class="def-message">Parabéns! Você fracassou de forma esplêndida!</p>
+            <button id="def-ok" class="win-button">OK</button>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Variáveis do jogo
+    let currentPhase = 0;
+    let lives = 3;
+    let timerInterval;
+    let timeLeft = 100; // 2 minutos em segundos
+    let inputCode = "";
+    const totalPhases = 5;
+    let randomPhases = [];
+
+    // Seleciona elementos
+    const startScreen      = document.getElementById('start-screen');
+    const gameScreen       = document.getElementById('game-screen');
+    const startButton      = document.getElementById('start-button');
+    const phaseDisplay     = document.getElementById('phase');
+    const timerDisplay     = document.getElementById('timer');
+    const livesDisplay     = document.getElementById('lives');
+    const codeDisplay      = document.getElementById('code-display');
+    const sendButton       = document.getElementById('send-button');
+    const keypadButtons    = document.querySelectorAll('.key');
+
+    // Seleciona botões das telas de vitória e derrota
+    const winScreen = document.getElementById("win-screen");
+    const winClose  = document.getElementById("win-close");
+    const winOk     = document.getElementById("win-ok");
+    const defScreen = document.getElementById("def-screen");
+    const defClose  = document.getElementById("def-close");
+    const defOk     = document.getElementById("def-ok");
+
+    // Eventos
+    startButton.addEventListener('click', startGame);
+    sendButton.addEventListener('click', checkCode);
+    keypadButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        inputCode += button.getAttribute('data-key');
+        updateCodeDisplay();
+      });
+    });
+    
+    // Atualiza o código exibido
+    function updateCodeDisplay() {
+      codeDisplay.textContent = inputCode;
+    }
+    
+    // Inicia o jogo: configura fase, vidas, timer e realiza a transição para a tela de jogo
+    function startGame() {
+      currentPhase = 1;
+      lives = 3;
+      randomPhases = randomnumber();
+      resetTimer();
+      updatePhaseDisplay();
+      updateLivesDisplay();
+      inputCode = "";
+      updateCodeDisplay();
+      updateEmojis();
+
+      // Transição: esconde tela inicial e exibe tela de jogo
+      startScreen.classList.remove('visible');
+      gameScreen.classList.add('visible');
+
+      startTimer();
+    }
+    
+    function updatePhase() {
+      if (currentPhase < totalPhases) {
+        currentPhase++;
+        resetTimer();
+        updatePhaseDisplay();
+        inputCode = "";
+        updateCodeDisplay();
+        updateEmojis(); // Atualiza os emojis para a nova fase
+      } else if (currentPhase === totalPhases) {
+        // Fim da fase 5 concluída:
+        showWinScreen();
+      }
+    }
+
+    function showWinScreen() {
+      clearInterval(timerInterval);
+      winScreen.classList.add("visible");
+    }
+
+    // Eventos para fechar as telas de vitória e derrota
+    winClose.addEventListener("click", () => {
+      winScreen.classList.remove("visible");
+      resetGame();
+    });
+    winOk.addEventListener("click", () => {
+      winScreen.classList.remove("visible");
+      resetGame();
+    });
+
+    function showDefScreen() {
+      clearInterval(timerInterval);
+      defScreen.classList.add("visible");
+    }
+    defClose.addEventListener("click", () => {
+      defScreen.classList.remove("visible");
+      resetGame();
+    });
+    defOk.addEventListener("click", () => {
+      defScreen.classList.remove("visible");
+      resetGame();
+    });
+    
+    // Botão de apagar
+    const deleteButton = document.getElementById('delete-button');
+    deleteButton.addEventListener('click', () => {
+      inputCode = inputCode.slice(0, -1);
+      updateCodeDisplay();
+    });
+    
+    function updatePhaseDisplay() {
+      phaseDisplay.textContent = `Fase: ${currentPhase} de ${totalPhases}`;
+    }
+    
+    function updateLivesDisplay() {
+      livesDisplay.innerHTML = "";
+      for (let i = 0; i < lives; i++) {
+        livesDisplay.innerHTML += `<img src="Imgs/heart.png" alt="Coração" class="heart-img">`;
+      }
+    }
+    
+    // Reseta o timer para 2 minutos
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 100;
+      updateTimerDisplay();
+      startTimer();
+    }
+    
+    // Atualiza a exibição do timer (mm:ss)
+    function updateTimerDisplay() {
+      let minutes = Math.floor(timeLeft / 60);
+      let seconds = timeLeft % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    // Inicia o timer regressivo
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          gameOver();
+        }
+      }, 1000);
+    }
+    
+    // Verifica se o código digitado está correto
+    function checkCode() {
+      const correctCode = randomPhases[currentPhase - 1];
+
+      if (inputCode === correctCode) {
+        updatePhase();
+      } else {
+        lives--;
+        updateLivesDisplay();
+        inputCode = "";
+        updateCodeDisplay();
+        if (lives <= 0) {
+          gameOver();
+        }
+      }
+    }
+    
+    // Exibe a tela de derrota em caso de Game Over
+    function gameOver() {
+      clearInterval(timerInterval);
+      showDefScreen();
+    }
+    
+    // Reinicia o jogo e retorna à tela inicial com transição suave
+    function resetGame() {
+      clearInterval(timerInterval);
+      gameScreen.classList.remove("visible");
+
+      setTimeout(() => {
+        currentPhase = 0;
+        lives = 3;
+        timeLeft = 100;
+        inputCode = "";
+        updateCodeDisplay();
+        updatePhaseDisplay();
+        updateLivesDisplay();
+        startScreen.classList.add("visible");
+      }, 500);
+    }
+    
+    function randomnumber() {
+      let maximo = 28;
+      let arr = [];
+      for (let i = 0; i < maximo; i++) {
+        arr[i] = (i + 1).toString().padStart(2, "0");
+      }
+      // Embaralha o array
+      for (let p = arr.length; p;) {
+        let n = Math.random() * p-- | 0;
+        [arr[p], arr[n]] = [arr[n], arr[p]];
+      }
+      return arr;
+    }
+
+    function getEmojisByCode(code) {
+      const emojis = {
+        "01": "📷 ⚡ 🤔 😟 👊",
+        "02": "🎶 🔨 💀 🤐 ☠️",
+        "03": "🩸⚔️👴💥🐂",
+        "04": "📖🧠🤪🔮❓",
+        "05": "⚡🧠🔧🤪💥",
+        "06": "🖤☠️🎨🌑🔭",
+        "07": "🎸🩸🤘💢🔫",
+        "08": "📜🧩🤔✍️🔮",
+        "09": "🤪🔫🌀❓🍀",
+        "10": "🔥☠️👿🪚🎯",
+        "11": "🎶💖😁🔫🫂",
+        "12": "📚🐕♟️😏🤓",
+        "13": "🍔😁⚡💪🛡️",
+        "14": "🧸💀❤️🧙‍♂️🤝",
+        "15": "🎙️💄🩸💃⭐",
+        "16": "📒📐🏹😤✔️",
+        "17": "⚡🦊😈💅🧨",
+        "18": "😐🖤💀😴🔪",
+        "19": "😎🪞💘🥰🩸",
+        "20": "📝📚🤔🥋🌀",
+        "21": "🤳🏅💥⚡📸",
+        "22": "🖤🌑🔪🔫☠️",
+        "23": "🤥🏹🪤🩸🦊",
+        "24": "🤓📖💡😰🎒",
+        "25": "⚡🥇💪🏃‍♂️🗣️",
+        "26": "🍃💀🙏🌙🤍",
+        "27": "🤬💪🪓🪓💥",
+        "28": "🌀😵‍💫👥🧠🔮"
+      };
+
+      return emojis[code] || "❓❓❓❓❓";
+    }
+
+    function updateEmojis() {
+      let code = randomPhases[currentPhase - 1];
+      document.getElementById("emojis").textContent = getEmojisByCode(code);
+    }
+  </script>
+</body>
+</html>
