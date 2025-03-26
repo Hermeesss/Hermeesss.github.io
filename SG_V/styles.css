@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+/* RESET E CONFIGURAÇÕES BÁSICAS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center; /* Centraliza textos */
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* VÍDEO DE FUNDO */
+#video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* TELA INICIAL */
+.screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ocupa a tela toda */
+}
+
+#start-screen-title {
+  padding: 10px 40px;
+  margin-bottom: 40px;
+  font-size: 2rem;       /* tamanho que fica bom em 1920×1080 */
+  line-height: 3.5rem;
+  color: #fff;
+}
+
+/* Formulário */
+form#myForm {
+  margin-bottom: 20px; /* Espaço abaixo do formulário */
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 300px;       /* largura confortável para 1920×1080 */
+  padding: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Label e input centralizados */
+form#myForm div {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+form#myForm label {
+  display: block;
+  color: #fff;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+#ACS {
+  font-size: 1rem;
+  width: 80%; /* Ajuste conforme desejar */
+  padding: 8px;
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+/* Botão do menu */
+.buttons-container {
+  display: flex;
+  justify-content: center; /* Centraliza o botão */
+  gap: 10px;
+}
+
+#Facil {
+  padding: 12px 24px;
+  font-size: 1.5rem;              /* tamanho pensado p/ 1920px */
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s;
+}
+
+#Facil:hover {
+  transform: scale(1.05);
+}
+
+/* =========================================================================
+   BREAKPOINTS - Adicione quantos precisar, ajustando tamanhos conforme
+=========================================================================-*/
+
+/* Telas entre 1600px e 1919px */
+@media (max-width: 1919px) and (min-width: 1600px) {
+  #start-screen-title {
+    font-size: 1.8rem;
+    line-height: 3rem;
+  }
+  form#myForm {
+    width: 280px;
+  }
+  #Facil {
+    font-size: 1.4rem;
+    padding: 10px 20px;
+  }
+}
+
+/* Telas entre 1366px e 1599px */
+@media (max-width: 1599px) and (min-width: 1366px) {
+  #start-screen-title {
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+  }
+  form#myForm {
+    width: 260px;
+  }
+  #Facil {
+    font-size: 1.3rem;
+    padding: 10px 18px;
+  }
+}
+
+/* Telas entre 1025px e 1365px */
+@media (max-width: 1365px) and (min-width: 1025px) {
+  #start-screen-title {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    line-height: 2.5rem;
+  }
+  form#myForm {
+    width: 240px;
+  }
+  #Facil {
+    font-size: 1.2rem;
+    padding: 10px 16px;
+  }
+}
+
+/* Telas até 1024px */
+@media (max-width: 1024px) {
+  #start-screen-title {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    line-height: 2rem;
+  }
+  form#myForm {
+    width: 220px;
+  }
+  #Facil {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Telas até 800px */
+@media (max-width: 800px) {
+  #start-screen-title {
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+  form#myForm {
+    width: 200px;
+  }
+  #Facil {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Telas até 600px */
+@media (max-width: 600px) {
+  #start-screen-title {
+    font-size: 1rem;
+    line-height: 1.6rem;
+  }
+  form#myForm {
+    width: 80%; /* Ajusta a largura em telas menores */
+  }
+  #Facil {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+}
+
+/* EFEITO VHS (opcional) */
+body:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+  background: url('https://ice-creme.de/images/background-noise.png');
+  background-size: cover;
+  opacity: 0.8;
+  animation: noise 1s infinite alternate;
+}
+
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10001;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+  background-size: 100% 4px;
+  opacity: 0.6;
+  animation: scanlines 0.2s linear infinite;
+}
+
+@keyframes noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5% -10%; }
+  20% { background-position: -15% 5%; }
+  30% { background-position: 7% -25%; }
+  40% { background-position: 20% 25%; }
+  50% { background-position: -25% 10%; }
+  60% { background-position: 15% 5%; }
+  70% { background-position: 0 15%; }
+  80% { background-position: 25% 35%; }
+  90% { background-position: -10% 10%; }
+}
+
+@keyframes scanlines {
+  from {
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+    background-size: 100% 3px;
+  }
+  to {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 50%, transparent 51%);
+    background-size: 100% 3px;
+  }
+}

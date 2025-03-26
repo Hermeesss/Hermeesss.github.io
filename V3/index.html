@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>V██3.exe</title>
+  <!-- Fonte customizada -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+  <div class="container">
+    <video autoplay muted loop id="video-bg">
+      <source src="../Assets/Imgs/video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos em HTML5.
+    </video>
+   
+    <!-- Tela Inicial -->
+    <div id="start-screen" class="screen visible">
+      <a href="../SG_V/index.html" class="back-button">Voltar</a>
+      <h1 id="start-screen-title">
+        INICIALIZANDO...<br>
+        ERRO V██3.exe<br>
+        TESTE Nº███ INICIADO....
+      </h1>
+      <button id="start-button">Começar</button>
+    </div>
+    
+    <!-- Tela de Jogo -->
+    <div id="game-screen" class="screen">
+      <div class="lives" id="lives"></div>
+      <div class="phase" id="phase">Fase: 0 de 5</div>
+      <div class="timer" id="timer">00:30</div>
+      <div class="emojis" id="emojis">😊 😊 😊 😊 😊</div>
+      
+      <div class="box-container">
+        <div class="code-display-container">
+          <div class="code-display" id="code-display"></div>
+          <button class="delete-button" id="delete-button">⌫</button>
+        </div>
+        <div class="keypad" id="keypad">
+          <button class="key" data-key="1">1</button>
+          <button class="key" data-key="2">2</button>
+          <button class="key" data-key="3">3</button>
+          <button class="key" data-key="4">4</button>
+          <button class="key" data-key="5">5</button>
+          <button class="key" data-key="6">6</button>
+          <button class="key" data-key="7">7</button>
+          <button class="key" data-key="8">8</button>
+          <button class="key" data-key="9">9</button>
+          <button class="key" data-key="0">0</button>
+          <button class="send-button" id="send-button">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tela de Vitória -->
+  <div id="win-screen" class="win-screen">
+    <div class="win-box">
+        <div class="win-header">
+            <span class="win-title">V██2.exe - Error</span>
+            <span class="win-close" id="win-close">✖</span>
+        </div>
+        <div class="win-content">
+            <img src="../Assets/Imgs/Smile.png" alt="Smiley">
+            <p class="win-message">Parabéns! Você completou o jogo com sucesso!</p>
+            <button id="win-ok" class="win-button">OK</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- Tela de Derrota -->
+  <div id="def-screen" class="def-screen">
+    <div class="def-box">
+        <div class="def-header">
+            <span class="def-title">V██2.exe - Error</span>
+            <span class="def-close" id="def-close">✖</span>
+        </div>
+        <div class="def-content">
+            <img src="../Assets/Imgs/angry.png" alt="Angry">
+            <p class="def-message">Parabéns! Você fracassou de forma esplêndida!</p>
+            <button id="def-ok" class="win-button">OK</button>
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <!-- Garante responsividade no mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V██4.exe</title>
+  <!-- Fonte customizada e CSS -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+  <div class="container">
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop id="video-bg">
+      <source src="../Assets/Imgs/video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos em HTML5.
+    </video>
+    
+    <!-- ============================= -->
+    <!-- Tela Inicial (Menu Principal) -->
+    <!-- ============================= -->
+    <div id="start-screen" class="screen visible">
+      <h1 id="start-screen-title">
+        INICIALIZANDO...<br>
+        ERRO V██4.exe<br>
+        TESTE Nº███ INICIADO....
+      </h1>
+
+      <!-- Formulário (pode ser substituído por div, se quiser) -->
+      <form id="myForm">
+        <div>
+          <label for="ACS">Digite aqui:</label><br>
+          <input type="text" id="ACS" placeholder="Escreva algo..." />
+        </div>
+      </form>
+
+      <div class="buttons-container">
+        <button id="Facil">Verificar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Botão
+    const facilButton = document.getElementById('Facil');
+    // Campo de texto
+    const acsInput    = document.getElementById('ACS');
+
+    // Exemplo: Verificar o valor e redirecionar
+    facilButton.addEventListener('click', () => {
+      // Obtém texto do input
+      const textoDigitado = acsInput.value.trim(); // remove espaços em branco nas pontas
+
+      if (textoDigitado === "1234") {
+        window.location.href ="../V3/index.html";
+      } else if (textoDigitado === "12345") {
+        window.location.href ="../V4/index.html";
+      } else {
+        // Se não for igual, faça algo: exibir mensagem, alert, etc.
+        alert("Texto incorreto. Tente novamente!");
+      }
+    });
+  </script>
+</body>
+</html>
