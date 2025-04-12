@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <!-- Garante responsividade no mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V██.exe</title>
+  <link rel="icon" href="../Assets/Simbol.png" type="image/x-icon">
+  <!-- Fonte customizada e CSS -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+  <div class="container">
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop id="video-bg">
+      <source src="../Assets/video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos em HTML5.
+    </video>
+    
+    <!-- ============================= -->
+    <!-- Tela Inicial (Menu Principal) -->
+    <!-- ============================= -->
+    <div id="start-screen" class="screen visible">
+      <h1 id="start-screen-title">
+        INICIALIZANDO...<br>
+        ERRO V██.exe<br>
+        TESTE Nº███ INICIADO....<br>
+      </h1>
+
+      <!-- Formulário (pode ser substituído por div, se quiser) -->
+      <form id="myForm">
+        <div>
+          <label for="ACS">Digite aqui:</label><br>
+          <input type="text" id="ACS" placeholder="Escreva..." />
+        </div>
+      </form>
+
+      <div class="buttons-container">
+        <button id="Facil">Verificar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const facilButton = document.getElementById('Facil');
+    const acsInput = document.getElementById('ACS');
+    const myForm = document.getElementById('myForm');
+  
+    function verificarTexto() {
+      const textoDigitado = acsInput.value.trim();
+  
+      if (textoDigitado === "NUMERADOS") {
+        window.location.href = "../V3/index.html";
+      } else if (textoDigitado === "CORES") {
+        window.location.href = "../V4/index.html";
+      } else {
+        alert("Texto incorreto. Tente novamente!");
+      }
+    }
+  
+    // Evento de clique no botão
+    facilButton.addEventListener('click', verificarTexto);
+  
+    // Intercepta o envio do formulário (quando pressiona Enter)
+    myForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // previne o comportamento padrão de envio do formulário
+      verificarTexto();
+    });
+  </script>
+</body>
+</html>

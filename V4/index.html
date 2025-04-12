@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <!-- Garante responsividade no mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V██4.exe</title>
+  <link rel="icon" href="../Assets/Simbol.png" type="image/x-icon">
+  <!-- Fonte customizada e CSS -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+</head>
+<body>
+  <div class="container">
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop id="video-bg">
+      <source src="../Assets/video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos em HTML5.
+    </video>
+    
+    <!-- ============================= -->
+    <!-- Tela Inicial (Menu Principal) -->
+    <!-- ============================= -->
+    <div id="start-screen" class="screen visible">
+      <a href="../index.html" class="back-button">Voltar</a>
+      <h1 id="start-screen-title">
+        INICIALIZANDO...<br>
+        ERRO V██4.exe<br>
+        TESTE Nº███ INICIADO....
+      </h1>
+      <div class="buttons-container">
+        <button id="Facil">Securus</button>
+        <button id="Medio">Mediocris</button>
+        <button id="Dificil">Arduus</button>
+      </div>
+    </div>
+
+    <!-- ========================== -->
+    <!-- Telas de "flash" das cores -->
+    <!-- ========================== -->
+     <!-- |Non omnia sunt |quae videntur, nec |semper optiones habemus| -->
+     <!-- FÁCIL -->
+     <div id="game-screen-facil" class="screen">
+      <h2 class="preserve">Non            </h2>
+      <h2 class="preserve">quae videntur,    </h2>
+      <div id="color-flash-facil" class="color-flash"></div>
+    </div>
+    <!-- MÉDIO -->
+    <div id="game-screen-medio" class="screen">
+      <h2 class="preserve">    omnia      </h2>
+      <h2 class="preserve">               nec </h2>
+      <h2 class="preserve">                habemus</h2>
+      <div id="color-flash-medio" class="color-flash"></div>
+    </div>
+    <!-- DIFÍCIL -->
+    <div id="game-screen-dificil" class="screen">
+      <h2 class="preserve">          sunt</h2>
+      <h2 class="preserve">          </h2>
+      <h2 class="preserve">semper optiones        </h2>
+      <div id="color-flash-dificil" class="color-flash"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Telas de seleção de cores (após o flash) -->
+    <!-- ============================================ -->
+    <!-- FÁCIL -->
+    <div id="game-screen-facil2" class="screen2">
+      <div class="buttons-container2">
+        <button class="color-button" id="Roxo"     value="#B026FF">Roxo</button>
+        <button class="color-button" id="Vermelho" value="#FF073A">Vermelho</button>
+        <button class="color-button" id="Azul"     value="#1F51FF">Azul</button>
+        <button class="color-button" id="Verde"    value="#39FF14">Verde</button>
+        <button class="color-button" id="Amarelo"  value="#FFFF33">Amarelo</button>
+      </div>
+    </div>
+    <!-- MÉDIO -->
+    <div id="game-screen-medio2" class="screen2">
+      <div class="buttons-container2">
+        <button class="color-button" id="Roxo"     value="#B026FF">Roxo</button>
+        <button class="color-button" id="Vermelho" value="#FF073A">Vermelho</button>
+        <button class="color-button" id="Azul"     value="#1F51FF">Azul</button>
+        <button class="color-button" id="Verde"    value="#39FF14">Verde</button>
+        <button class="color-button" id="Amarelo"  value="#FFFF33">Amarelo</button>
+      </div>
+    </div>
+    <!-- DIFÍCIL -->
+    <div id="game-screen-dificil2" class="screen2">
+      <div class="buttons-container2">
+        <button class="color-button" id="Roxo"     value="#B026FF">Roxo</button>
+        <button class="color-button" id="Vermelho" value="#FF073A">Vermelho</button>
+        <button class="color-button" id="Azul"     value="#1F51FF">Azul</button>
+        <button class="color-button" id="Verde"    value="#39FF14">Verde</button>
+        <button class="color-button" id="Amarelo"  value="#FFFF33">Amarelo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== -->
+  <!-- Tela de Vitória -->
+  <!-- =============== -->
+  <div id="win-screen" class="win-screen">
+    <div class="win-box">
+      <div class="win-header">
+        <span class="win-title">V██4.exe - Error</span>
+        <span class="win-close" id="win-close">✖</span>
+      </div>
+      <div class="win-content">
+        <img src="../Assets/He.png" alt="Smiley">
+        <p class="win-message">Parabéns! Você completou o jogo com sucesso!</p>
+        <p class="win-message" id="p1">Seu prêmio é "O"</p>
+        <p class="win-message" id="p2">Seu prêmio é "Ê"</p>
+        <p class="win-message" id="p3">Seu prêmio é "N"</p>
+        <button id="win-ok" class="win-button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== -->
+  <!-- Tela de Derrota -->
+  <!-- =============== -->
+  <div id="def-screen" class="def-screen">
+    <div class="def-box">
+      <div class="def-header">
+        <span class="def-title">V██4.exe - Error</span>
+        <span class="def-close" id="def-close">✖</span>
+      </div>
+      <div class="def-content">
+        <img src="../Assets/Ha.png" alt="Angry">
+        <p class="def-message">Parabéns! Seus amigos te odeiam!!</p>
+        <button id="def-ok" class="win-button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arquivo JS com lógica do jogo -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+/* ===================================
+   RESET E CONFIGURAÇÕES BÁSICAS
+==================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  /* Exemplo de animação de cor, se desejar, crie keyframes:
+     animation: bgColor 10s infinite; */
+  /* ou remova se não usar */
+}
+
+/* =======================
+   CONTAINER PRINCIPAL
+======================= */
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* =======================
+   VÍDEO DE FUNDO
+======================= */
+#video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.back-button {
+  position: fixed;      /* fixa o botão na posição da tela */
+  top: 20px;            /* distância do topo */
+  left: 450px;           /* distância da esquerda */
+  text-decoration: none;/* remove sublinhado do link */
+  color: #ffffff;       /* cor do texto */
+  background: rgba(0, 0, 0, 0.5); /* fundo semitransparente */
+  padding: 10px 20px;   /* espaçamento interno */
+  border: 2px solid #fff; /* borda branca */
+  border-radius: 10px;  /* cantos arredondados */
+  font-family: 'Press Start 2P', cursive; /* se quiser manter a fonte do projeto */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 999;         /* para ficar acima de outros elementos */
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+}
+
+/* =======================
+   SISTEMA DE “TELAS”
+======================= */
+.screen, .screen2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Quando .visible, a tela aparece */
+.screen.visible, .screen2.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =======================
+   TELA INICIAL
+======================= */
+#start-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#start-screen-title {
+  padding: 10px 40px;
+  margin-bottom: 80px;
+  font-size: 2rem;
+  line-height: 3.5rem;
+  color: #fff;
+}
+
+/* Container para botões do menu */
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 10px;
+  flex-wrap: wrap; /* permite quebra de linha se necessário */
+}
+
+/* =======================
+   BOTÕES DE NÍVEL
+======================= */
+#start-screen button {
+  flex: 1 1 20%;        /* Reduz a base para 20% do container */
+  padding: 20px 40px;
+  font-size: 2rem;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* =======================
+   TELAS DE JOGO (FLASH)
+======================= */
+#game-screen-facil,
+#game-screen-medio,
+#game-screen-dificil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 20px;
+}
+
+/* =======================
+   TELAS DE SELEÇÃO DE COR
+======================= */
+#game-screen-facil2,
+#game-screen-medio2,
+#game-screen-dificil2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Container para botões de cor */
+.buttons-container2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 20px;
+}
+
+/* Botões de cor */
+.color-button {
+  flex: 1 1 calc(20% - 15px);
+  min-width: 150px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.color-button:hover {
+  background-color: rgba(0, 0, 0, 0.85);
+  transform: scale(1.05);
+}
+
+/* Cor de fundo para cada botão */
+#Roxo {
+  background-color: #B026FF;
+}
+#Verde {
+  background-color: #39FF14;
+}
+#Amarelo {
+  background-color: #FFFF33;
+}
+#Azul {
+  background-color: #1F51FF;
+}
+#Vermelho {
+  background-color: #FF073A;
+}
+
+/* =======================
+   ÁREA DE FLASH DE COR
+======================= */
+.color-flash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 1080px;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* =======================
+   TELAS DE VITÓRIA/DERROTA
+======================= */
+.win-screen,
+.def-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(154, 134, 207, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+}
+.win-screen.visible,
+.def-screen.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Janela interna */
+.win-box,
+.def-box {
+  background: #f3e5cd;
+  border: 2px solid #7755a0;
+  border-radius: 3px;
+  width: 340px;
+  box-shadow: 4px 4px 0px #9a77c7;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+}
+
+/* Cabeçalho */
+.win-header,
+.def-header {
+  background: #7765c4;
+  color: white;
+  padding: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border-bottom: 2px solid #7755a0;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.win-title,
+.def-title {
+  font-size: 14px;
+}
+
+/* Botão de fechar (X) */
+.win-close,
+.def-close {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 6px;
+  background: #d3c2f2;
+  border: 1px solid #7755a0;
+  border-radius: 2px;
+}
+.win-close:hover,
+.def-close:hover {
+  background: #ff5b5b;
+  color: white;
+}
+
+/* Conteúdo interna */
+.win-content,
+.def-content {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: black;
+}
+.win-content img,
+.def-content img {
+  width: 80px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.win-message,
+.def-message {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.win-button,
+.def-button {
+  background: linear-gradient(to bottom, #ffffff, #dedede);
+  border: 2px solid #7765c4;
+  padding: 5px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.win-button:hover,
+.def-button:hover {
+  background: linear-gradient(to bottom, #e6e6e6, #c0c0c0);
+}
+
+.preserve {
+  text-align: center;
+  white-space: pre;
+}
+
+
+/* =======================
+   MEDIA QUERIES
+======================= */
+/* Telas até 1366px */
+@media (max-width: 1366px) {
+  #start-screen-title {
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    margin-bottom: 50px;
+  }
+  #start-screen button {  
+    padding: 5px 15px;
+    font-size: 1.4rem;
+    flex: none; /* Desativa a expansão do flex */
+    width: 150px; /* Define uma largura fixa */
+    height: 60px;   /* se necessário */
+  }
+  .preserve {
+    font-size: 1.6rem;
+  }
+  .buttons-container {
+    justify-content: center;  /* Alinha os botões no centro, sem espaços extremos */
+    gap: 50px;                 /* Reduz o espaçamento entre os botões */
+  }
+  .back-button {
+    left: 320px;           /* distância da esquerda */
+  }
+
+  .color-flash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56.5%;
+    max-width: 1080px;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+}
+
+/* =======================
+   MEDIA QUERIES
+======================= */
+/* Telas até 1024px */
+@media (max-width: 1024px) {
+  #start-screen-title {
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    margin-bottom: 50px;
+  }
+  #start-screen button {
+    padding: 15px 30px;
+    font-size: 1.4rem;
+  }
+  .preserve {
+    font-size: 1.6rem;
+  }
+}
+
+/* Telas até 600px */
+@media (max-width: 600px) {
+  #start-screen-title {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    margin-bottom: 30px;
+  }
+  #start-screen button {
+    flex: none; 
+    width: 200px; /* Define uma largura fixa */
+    height: 50px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+  }
+  
+  .color-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: none;
+  }
+
+  .preserve {
+    font-size: 1.0rem;
+  }
+
+  .back-button {
+    font-size: 0.8rem;
+    left: 20px;           /* distância da esquerda */
+  }
+}
+
+/* =======================
+   EFEITO VHS (opcional)
+======================= */
+body:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+  background-size: cover;
+  opacity: 0.8;
+  animation: noise 1s infinite alternate;
+}
+
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10001;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+  background-size: 100% 4px;
+  opacity: 0.6;
+  animation: scanlines 0.2s linear infinite;
+}
+
+@keyframes noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5% -10%; }
+  20% { background-position: -15% 5%; }
+  30% { background-position: 7% -25%; }
+  40% { background-position: 20% 25%; }
+  50% { background-position: -25% 10%; }
+  60% { background-position: 15% 5%; }
+  70% { background-position: 0 15%; }
+  80% { background-position: 25% 35%; }
+  90% { background-position: -10% 10%; }
+}
+
+@keyframes scanlines {
+  from {
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+    background-size: 100% 3px;
+  }
+  to {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 50%, transparent 51%);
+    background-size: 100% 3px;
+  }
+}

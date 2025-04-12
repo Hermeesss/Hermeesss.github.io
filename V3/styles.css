@@ -1,0 +1,725 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+/* ------------------------------------------------------------------ */
+/* Reset e configurações básicas                                      */
+/* ------------------------------------------------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Alterado para utilizar a fonte "Press Start 2P" em todo o site */
+body {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  /* Se possível, REMOVA ou altere o overflow para permitir a rolagem vertical:
+     overflow: hidden;  */
+  /* Exemplo:
+     overflow-x: hidden;
+     overflow-y: auto; 
+  */
+
+  /* Animação do fundo entre roxo, azul, amarelo e verde */
+  animation: bgColor 10s infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Container principal                                                */
+/* ------------------------------------------------------------------ */
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ------------------------------------------------------------------ */
+/* Vídeo de fundo                                                     */
+/* ------------------------------------------------------------------ */
+#video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover; 
+  z-index: -1; 
+}
+
+.back-button {
+  position: fixed;      /* fixa o botão na posição da tela */
+  top: 20px;            /* distância do topo */
+  left: 450px;           /* distância da esquerda */
+  text-decoration: none;/* remove sublinhado do link */
+  color: #ffffff;       /* cor do texto */
+  background: rgba(0, 0, 0, 0.5); /* fundo semitransparente */
+  padding: 10px 20px;   /* espaçamento interno */
+  border: 2px solid #fff; /* borda branca */
+  border-radius: 10px;  /* cantos arredondados */
+  font-family: 'Press Start 2P', cursive; /* se quiser manter a fonte do projeto */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 999;         /* para ficar acima de outros elementos */
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+}
+
+
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.screen.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tela Inicial                                                       */
+/* ------------------------------------------------------------------ */
+#start-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  transition: opacity 0.5s;
+}
+
+#start-screen-title {
+  padding: 10px 40px;
+  margin-bottom: 80px;
+  font-size: 2rem;
+  /* Agora usando "Press Start 2P" */
+  font-family: 'Press Start 2P', cursive;
+  line-height: 3.5rem;
+  color: #fff;
+}
+
+.jese-font {
+  /* Se desejar que este elemento também use "Press Start 2P", basta remover ou alterar esta linha */
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* Botão de Iniciar */
+#start-screen button {
+  padding: 20px 40px;
+  font-size: 2rem;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  /* Alterado para "Press Start 2P" */
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tela de Jogo                                                       */
+/* ------------------------------------------------------------------ */
+#game-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  color: #fff;
+  padding: 20px;
+  transition: opacity 0.5s;
+  /* Garante que o texto use a nova fonte */
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* Fase */
+.phase {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* Timer */
+.timer {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* Emojis */
+.emojis {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+/* Indicador de Vidas (corações) */
+.lives {
+  position: absolute;
+  top: 20px;
+  right: 420px; /* Ajuste conforme a necessidade do layout */
+  font-size: 1.5em;
+}
+
+img.heart-img {
+  width: 100px;
+  height: 50px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Área de Exibição do Código                                         */
+/* ------------------------------------------------------------------ */
+.code-display-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.code-display {
+  flex-grow: 1;
+  font-size: 40px;
+  text-align: center;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.delete-button {
+  background: rgba(0, 0, 0, 0.80);
+  color: white;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.delete-button:hover {
+  background: #cc0000;
+}
+
+/* ------------------------------------------------------------------ */
+/* Teclado Numérico                                                   */
+/* ------------------------------------------------------------------ */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px) auto;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.key {
+  background-color: rgba(0, 0, 0, 0.80);
+  padding: 20px;
+  font-size: 2rem;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Alterado para "Press Start 2P" */
+  font-family: 'Press Start 2P', cursive;
+  color: #ffffff;
+}
+
+/* Botão de enviar (ocupa 2 colunas no grid) */
+.send-button {
+  grid-column: 2 / 4; /* Faz o botão ocupar todas as colunas da linha */
+  padding: 20px 40px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------ */
+/* Container da Caixa (Box) que engloba o display de código e keypad  */
+/* ------------------------------------------------------------------ */
+.box-container {
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  margin: 30px auto;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ==================== */
+/*    Media Queries     */
+/* ==================== */
+
+/* Ajustes para telas até 1366px (muito útil para 1360x768) */
+@media (max-width: 1366px) {
+  #start-screen-title {
+    font-size: 1.4rem;
+    margin-bottom: 60px;
+  }
+  
+  #start-screen button {
+    padding: 18px 36px;
+    font-size: 1.0rem;
+  }
+  
+  .back-button {
+    left: 330px;           /* distância da esquerda */
+  }
+
+  .phase,
+  .timer,
+  .emojis {
+    font-size: 1.6em;
+  }
+  
+  .lives {
+    right: 20px;
+    top: 10px;
+    right: 280px;
+  }
+  
+  img.heart-img {
+    width: 80px;
+    height: 40px;
+  }
+  
+  .code-display {
+    font-size: 32px;
+  }
+  
+  .delete-button {
+    font-size: 16px;
+    padding: 8px;
+  }
+  
+  .keypad {
+    grid-template-columns: repeat(3, 65px);
+    grid-template-rows: repeat(3, 65px) auto;
+    gap: 8px;
+  }
+  
+  .key {
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .send-button {
+    padding: 15px 30px;
+    font-size: 1.0rem;
+  }
+  
+  .box-container {
+    padding: 10px;
+    margin: 10px auto;
+  }
+}
+
+/* Ajustes para telas até 1024px */
+@media (max-width: 1024px) {
+  #start-screen-title {
+    font-size: 2rem;
+    padding: 10px 20px;
+    margin-bottom: 60px;
+  }
+  
+  #start-screen button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+  }
+  
+  .phase,
+  .timer,
+  .emojis {
+    font-size: 2rem;
+  }
+  
+  .lives {
+    right: 20px; /* Posicionamento ajustado para telas menores */
+    top: 10px;
+  }
+  
+  img.heart-img {
+    width: 60px;
+    height: 30px;
+  }
+  
+  .code-display {
+    font-size: 30px;
+  }
+  
+  .delete-button {
+    font-size: 16px;
+    padding: 8px;
+  }
+  
+  .keypad {
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px) auto;
+    gap: 8px;
+  }
+  
+  .key {
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .send-button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+  }
+  
+  .box-container {
+    padding: 15px;
+    margin: 20px auto;
+  }
+}
+
+/* ======================== */
+/*   Estilo da tela de vitória (fora do media query) */
+/* ======================== */
+.win-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(154, 134, 207, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+.win-box {
+  background: #f3e5cd;
+  border: 2px solid #7755a0;
+  border-radius: 3px;
+  width: 340px;
+  box-shadow: 4px 4px 0px #9a77c7;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+}
+
+.win-header {
+  background: #7765c4;
+  color: white;
+  padding: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border-bottom: 2px solid #7755a0;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.win-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+}
+
+.win-close {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 6px;
+  background: #d3c2f2;
+  border: 1px solid #7755a0;
+  border-radius: 2px;
+}
+
+.win-close:hover {
+  background: #ff5b5b;
+  color: white;
+}
+
+.win-content {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.win-content img {
+  width: 80px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.win-message {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.win-button {
+  background: linear-gradient(to bottom, #ffffff, #dedede);
+  border: 2px solid #7765c4;
+  padding: 5px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.win-button:hover {
+  background: linear-gradient(to bottom, #e6e6e6, #c0c0c0);
+}
+
+.win-screen.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+.def-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(154, 134, 207, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+.def-box {
+  background: #f3e5cd;
+  border: 2px solid #7755a0;
+  border-radius: 3px;
+  width: 340px;
+  box-shadow: 4px 4px 0px #9a77c7;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+}
+
+.def-header {
+  background: #7765c4;
+  color: white;
+  padding: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border-bottom: 2px solid #7755a0;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.def-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+}
+
+.def-close {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 6px;
+  background: #d3c2f2;
+  border: 1px solid #7755a0;
+  border-radius: 2px;
+}
+
+.def-close:hover {
+  background: #ff5b5b;
+  color: white;
+}
+
+.def-content {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.def-content img {
+  width: 80px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.def-message {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.def-button {
+  background: linear-gradient(to bottom, #ffffff, #dedede);
+  border: 2px solid #7765c4;
+  padding: 5px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.def-button:hover {
+  background: linear-gradient(to bottom, #e6e6e6, #c0c0c0);
+}
+
+.def-screen.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ajustes para dispositivos móveis (até 600px) */
+@media (max-width: 600px) {
+  #start-screen-title {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+  }
+  
+  .back-button {
+    top: 10px;  /* se quiser diminuir a distância no mobile */
+    left: 12px;  /* mantém na esquerda */
+  }
+  
+
+  #start-screen button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+  }
+  
+  .phase,
+  .timer,
+  .emojis {
+    font-size: 1.4rem;
+  }
+  
+  .lives {
+    right: 95px;
+    top: 500px;
+  }
+  
+  img.heart-img {
+    width: 70px;
+    height: 35px;
+  }
+  
+  .code-display {
+    font-size: 24px;
+    padding: 4px;
+  }
+  
+  .delete-button {
+    font-size: 14px;
+    padding: 6px;
+  }
+  
+  .keypad {
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px) auto;
+    gap: 6px;
+  }
+  
+  .key {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .send-button {
+    padding: 10px 10px;
+    font-size: 1rem;
+  }
+  
+  .box-container {
+    padding: 10px;
+    margin: 15px auto;
+  }
+}
+
+/* -----------------------------------------------------------
+   Efeito VHS overlay: Noise e Scanlines sobre toda a tela
+----------------------------------------------------------- */
+/* Pseudo-elemento para o efeito de noise */
+body:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+  background-size: cover;
+  opacity: 0.8;
+  animation: noise 1s infinite alternate;
+}
+
+/* Pseudo-elemento para o efeito de scanlines */
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10001;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+  background-size: 100% 4px;
+  opacity: 0.6;
+  animation: scanlines 0.2s linear infinite;
+}
+
+/* Keyframes para o efeito VHS */
+@keyframes noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5% -10%; }
+  20% { background-position: -15% 5%; }
+  30% { background-position: 7% -25%; }
+  40% { background-position: 20% 25%; }
+  50% { background-position: -25% 10%; }
+  60% { background-position: 15% 5%; }
+  70% { background-position: 0 15%; }
+  80% { background-position: 25% 35%; }
+  90% { background-position: -10% 10%; }
+}
+
+@keyframes scanlines {
+  from {
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%);
+    background-size: 100% 3px;
+  }
+  to {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 50%, transparent 51%);
+    background-size: 100% 3px;
+  }
+}
